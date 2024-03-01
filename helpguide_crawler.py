@@ -56,11 +56,14 @@ def extract_tags(html):
     soup = BeautifulSoup(html, 'html.parser')
     tags = []
     tag_area = soup.select_one("#ctl00_ctl00_cpContent_cpContent_divTags")
-    for element in tag_area.descendants:
-        if element.name == 'a':
-            tags.append(element.get_text())
-    massive_text = " ".join(tags)
-    return massive_text
+    if tag_area is not None:
+        for element in tag_area.descendants:
+            if element.name == 'a':
+                tags.append(element.get_text())
+        massive_text = " ".join(tags)
+        return massive_text
+    else:
+        return None
 
 
 def extract_paragraphs(html):
@@ -96,25 +99,28 @@ def extract_info(url):
     header = extract_header(html)
     tags = extract_tags(html)
     paragraphs = extract_paragraphs(html)
-    print(header)
-    print(url)
-    print(tags)
-    print(paragraphs)
+    #print(header)
+    #print(url)
+    #print(tags)
+    #print(paragraphs)
     return header, tags, paragraphs
 
 
 def export_csv(urls):
-    with open('help_guide.csv', mode='w', newline='') as file:
+    with open('help_guide.csv', mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(["URL", "Header", "Tags", "Paragraphs"])
         for url in urls:
+            print(url)
             header, tags, paragraphs = extract_info(url)
-            writer.writerow([url, header, tags, paragraphs])  # 
+            writer.writerow([url, header, tags, paragraphs])
 
 
 def main():
     urls = get_urls('article_urls.txt')
+    #url = "https://td.byui.edu/TDClient/79/ITHelpCenter/KB/ArticleDet?ID=11648&SIDs=289"
     export_csv(urls)
+    #extract_info(url)
 
 if __name__ == '__main__':
     main()
