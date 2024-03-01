@@ -26,15 +26,15 @@ def find_cat(html, urls):
             if(exceptions(path)):
                 full_url = urljoin(base_url, element.get('href'))
                 urls.append(full_url)
-                print(full_url, element.get_text())
+                #print(full_url, element.get_text())
 
 def find_art(cat_urls, art_urls):
     for url in cat_urls:
         if ("CategoryID" in url):
-            print('found catagory!')
+            #print('found catagory!')
             find_cat(get_page(url), cat_urls) #recursion to use this to loop back until there's no more catagories.
         elif ("ArticleDet" in url):
-            print('found article!')
+            #print('found article!')
             art_urls.append(url)
         else:
             print("ERROR!")
@@ -49,6 +49,7 @@ def exceptions(links):
 
 
 def main():
+    print("Using shallow scan...")
     cat_urls = [] #catagory pages
     art_urls = [] #article pages
     starting_path = 'https://td.byui.edu/TDClient/79/ITHelpCenter/KB/?CategoryID=1875'

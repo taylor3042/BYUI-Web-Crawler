@@ -3,17 +3,16 @@ import csv
 from bs4 import BeautifulSoup
 import os
 import argparse
-import deep_scan
-import shallow_scan
-
+from deep_scan import main as deep_main
+from shallow_scan import main as shallow_main
 
 # Create an ArgumentParser object
-parser = argparse.ArgumentParser(description='Process some integers.', add_help=False)
+parser = argparse.ArgumentParser(description='WebCrawler for HelpGuides at BYUI', add_help=False)
 
-# Add arguments to the parser
-parser.add_argument('--scan', type=str, default='shallow')
-parser.add_argument('--output', type=str, default='help_guide.csv')
-parser.add_argument('--rerun', type=bool, default= False)
+# Add arguments to the parser with modified default values
+parser.add_argument('--scan', type=str, default='shallow', help='Specify if you would like to use the deep scan or shallow scan. Default is deep.')
+parser.add_argument('--output', type=str, default='help_guide.csv', help='Change the output file to something different. Default is custom_output.csv.')
+parser.add_argument('--rerun', type=bool, default=True, help='Rerun the list of URLs. Default is True.')
 
 # Add a custom help message
 parser.add_argument('--help', action='store_true', help='Show this help message')
@@ -68,16 +67,24 @@ def extract_tags(html):
 
 def extract_paragraphs(html):
     soup = BeautifulSoup(html, 'html.parser')
-    paragraphs = []
-    for p in soup.find_all('p'):
-        # Check if the paragraph contains any 'a' tags (hyperlinks)
-        if (not p.find('a') and "Contact Us" not in p.get_text() and "Hours of Operation" not in p.get_text()):
-            # If no 'a' tags found, Contact Us is not in text, and Hours of Operation, add the text to the result
-            # Both text checks make sure that they don't get redundant information
-            paragraphs.append(p.get_text())
-    
-    massive_text = "\n".join(paragraphs)
-    return massive_text
+    paragraphs_and_headers = []
+    par_area = soup.select_one("#ctl00_ctl00_cpContent_cpContent_divBody")
+    if par_area is not None:
+        for element in par_area.descendants:
+            text = element.get_text()
+            if ((element.name == 'p' or element.name == 'h2') and "Contact Us" not in text and 
+                "Hours of Operation" not in text and "excluding weekly devotional" not in text and "this link" not in text):
+                # This will exclude everything except p and h2 which are text and sub headings in these tags it will
+                # exclude our hours of operation, contact info to prevent redundency, and
+                # link so it doesn't promise a link that it won't deliver
+                paragraphs_and_headers.append(text)
+            
+        massive_text = "    ".join(paragraphs_and_headers)
+        massive_text = massive_text.replace("Â", "") # removes the special character Â from text.
+        return massive_text
+    else:
+        return None
+
 
 def get_urls(txtFile):
     # Initialize an empty list to store the URLs
@@ -96,13 +103,9 @@ def get_urls(txtFile):
 def extract_info(url):
    
     html = get_page(url) 
-    header = extract_header(html)
+    header = extract_header(html).strip()
     tags = extract_tags(html)
     paragraphs = extract_paragraphs(html)
-    #print(header)
-    #print(url)
-    #print(tags)
-    #print(paragraphs)
     return header, tags, paragraphs
 
 
@@ -117,10 +120,24 @@ def export_csv(urls):
 
 
 def main():
-    urls = get_urls('article_urls.txt')
-    #url = "https://td.byui.edu/TDClient/79/ITHelpCenter/KB/ArticleDet?ID=11648&SIDs=289"
+    
+    text_file = 'article_urls.txt'
+    if(args.rerun):
+        if(args.scan == "deep"):
+            deep_main()
+            text_file = 'working_urls.txt'
+        elif (args.scan == "shallow"):
+            shallow_main()
+        else:
+            print("Sorry, I didn't understand your scanning preference")
+            print("Using default")
+            shallow_main()
+    else: 
+        print("skipping scan, exporting information to csv...")
+    
+
+    urls = get_urls(text_file)
     export_csv(urls)
-    #extract_info(url)
 
 if __name__ == '__main__':
     main()

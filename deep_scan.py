@@ -25,9 +25,9 @@ def set_queue(working_urls):
 
 
 def main():
+    print("Using deep scan....")
     working_urls = []
     set_queue(working_urls)
-
     with open('working_urls.txt', 'a') as f:
         for urls in working_urls:
             f.write(f"{urls}\n")
