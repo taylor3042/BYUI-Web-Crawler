@@ -14,7 +14,7 @@ parser.add_argument('--scan', type=str, default='shallow', help='Specify if you 
 parser.add_argument('--output', type=str, default='help_guide.csv', help='Change the output file to something different. Default is custom_output.csv.')
 parser.add_argument('--rerun', type=bool, default=True, help='Rerun the list of URLs. Default is True.')
 
-# Add a custom help message
+# Help message
 parser.add_argument('--help', action='store_true', help='Show this help message')
 
 # Parse the arguments
@@ -31,9 +31,6 @@ if args.help:
     print("rerun arguments: true, false       False is used by default")
     print("Use --output to change the output file to something different.")
     print("output arguments: /path/you/would/like/[name of desired file].csv     help_guide.csv is used by default")
-else:
-    # Access the arguments
-    print("Defualt Arguments Running")
 
 def get_page(url):
     try:
@@ -72,7 +69,7 @@ def extract_paragraphs(html):
     if par_area is not None:
         for element in par_area.descendants:
             text = element.get_text()
-            if ((element.name == 'p' or element.name == 'h2') and "Contact Us" not in text and 
+            if ((element.name == 'p' or element.name == 'h2' or element.name == 'h3' or element.name == 'h4') and "Contact Us" not in text and 
                 "Hours of Operation" not in text and "excluding weekly devotional" not in text and "this link" not in text):
                 # This will exclude everything except p and h2 which are text and sub headings in these tags it will
                 # exclude our hours of operation, contact info to prevent redundency, and
@@ -80,7 +77,7 @@ def extract_paragraphs(html):
                 paragraphs_and_headers.append(text)
             
         massive_text = "    ".join(paragraphs_and_headers)
-        massive_text = massive_text.replace("Â", "") # removes the special character Â from text.
+        massive_text = massive_text.replace("Â", " ") # removes the special character Â from text.
         return massive_text
     else:
         return None

@@ -56,7 +56,7 @@ def main():
     find_cat(get_page(starting_path), cat_urls)
     find_art(cat_urls, art_urls)
     
-    with open('article_urls.txt', 'a') as f:
+    with open('shallow_scan.txt', 'a') as f:
         for urls in art_urls:
             f.write(f"{urls}\n")
         f.close()
