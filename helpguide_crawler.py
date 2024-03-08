@@ -115,7 +115,6 @@ def export_csv(urls):
             header, tags, paragraphs = extract_info(url)
             writer.writerow([url, header, tags, paragraphs])
 
-
 def main():
     
     text_file = 'article_urls.txt'
