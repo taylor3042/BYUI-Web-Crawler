@@ -38,7 +38,7 @@ Q: Why is slightly slow?   A: Initially I really wanted to thread this, but when
 
 Q: The site changes drastically, would this still be useful?   A: As long as the domain names are similar example: "https://td.byui.edu/TDClient/79/ITHelpCenter/KB/ArticleDet?ID=11745" you can simply change the range (if the range changes at all), and it should still work as normal.
 
-Q: Why does it give me the error: "File "c:\Users\taylor7337\Documents\BYUI-Web-Crawler\helpguide_crawler.py", line 1, in <module>
+Q: Why does it give me the error: "File "c:[path to]\helpguide_crawler.py", line 1, in <module>
 import requests"    A:   This is because you need to install beautifulsoup4 and request, refer to my prerequisits section above.
 
 Q: What would be the purpose of something like this?   A: My manager wanted the information scraped from these websites to make it easy for an AI to train on. While working on it we realized this has a few different applications such as seeing guides that shouldn't be in the place it is, the domain names having a pattern, etc.
