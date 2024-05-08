@@ -16,7 +16,8 @@ def removeSIDs(file):
                 modified_url = modified_url.replace(param, '')
                 break
         if modified_url.endswith('&'):
-            modified_url = modified_url[:-1]  # Removing the trailing '&' as well
+            # Removes the trailing '&' as well
+            modified_url = modified_url[:-1]  
         modified_urls.append(modified_url)
 
     with open(file, 'w') as f:
@@ -39,7 +40,7 @@ def check_duplicates(chunk, result):
 
     result.update(seen)
 
-# Function to split a list into chunks
+# Function to split a list into chunks so the computer is not overwhellmed
 def chunkify(lst, num_chunks):
     chunk_size = len(lst) // num_chunks
     chunks = [lst[i:i+chunk_size] for i in range(0, len(lst), chunk_size)]
@@ -73,7 +74,6 @@ def main():
     print("Cleaning up URL file....")
     removeSIDs(file_path)
     find_duplicates_from_file(file_path)
-    #print("Duplicates found:", duplicates)
 
 if __name__ == '__main__':
     main()

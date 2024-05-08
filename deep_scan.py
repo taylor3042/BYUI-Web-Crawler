@@ -18,8 +18,15 @@ def get_page(url):
 def set_queue(working_urls):
 
     #change the range if this expands in the future.
-    for number in range(10750, 14750):
-        # In the range (currently 10750 - 14740) check each number as a valid URL
+    rstart = input("Select the starting range(or hit enter for default): ")
+    rend = input("Select the ending range(or hit enter for default): ")
+    if rstart or rend is None:
+        print("None was selected for either number, using defaults")
+        rstart = 10750
+        rend = 14750
+    
+    for number in range(rstart, rend):
+        # In the range (currently 10750-14740) check each number as a valid URL
         url = f'https://td.byui.edu/TDClient/79/ITHelpCenter/KB/ArticleDet?ID={number}'
         check_url(url, working_urls)
 

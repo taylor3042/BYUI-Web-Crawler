@@ -11,7 +11,7 @@ def main():
     words_to_remove = ["Issue", "Environment", "resolution", "Escalation", "Cause", "Resolution", "Tier 1","for", "TIER 1", "the", "a", "and", "an", "The"]
     # Initialize an empty list to store the extracted data
     data = []
-    json_file_path = 'sample.json'
+    json_file_path = 'TD.json'
     # Read the CSV file and extract the specified columns
     with open(csv_file, 'r', encoding='utf-8-sig') as csv_file:
         csv_reader = csv.reader(csv_file)
@@ -31,7 +31,12 @@ def main():
     with open(json_file_path, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
 
-
+    # This seems too long to work efficently, and it's in part due to
+    # the actual data it retrieves. The escape character can't be removed
+    # by simply converting it back from csv to json again. So the simplist
+    # and best working solution was to use the replace function to remove
+    # specific escape characters. This whole program averages 0.8 seconds
+    # so the size of this section doesn't seem to have a large effect.
     for item in data:
         for word in words_to_remove:
             item['content'] = item['content'].replace(word, '')
@@ -53,12 +58,12 @@ def main():
         item['content'] = item['content'].replace('\u202f', '')
         item['content'] = item['content'].replace('\u2014', '')
 
-
+    # Removes any more spaces (there should only be a few more)
     for item in data:
         item['content'] = item['content'].replace(' ', '')
     data = data[1:]
 
-    # Write the modified data back to the same JSON file
+    # Writes the modified data back to the same JSON file
     with open(json_file_path, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, indent=4)
 

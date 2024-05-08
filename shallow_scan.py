@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import re
 
 base_url = "https://td.byui.edu/"
 
@@ -33,9 +32,9 @@ def find_cat(html, urls):
 def find_art(cat_urls, art_urls):
     for url in cat_urls:
         if "CategoryID" in url:
-            find_cat(get_page(url), cat_urls)  # Recursion to loop back until there's no more categories.
+            find_cat(get_page(url), cat_urls)  
+            # Recursion to loop back until there's no more categories.
         elif "ArticleDet" in url:
-            #print(f'Url is: {url} and length is {len(url)}')
             art_urls.append(url)
         else:
             print("ERROR!")
@@ -54,6 +53,9 @@ def main():
     print("Using shallow scan...")
     cat_urls = [] #catagory pages
     art_urls = [] #article pages
+    # Below  commented out is the starting path for help guides. Change the starting path 
+    # below if needed, but make sure to comment out the starting path for the sandbox in case!
+
     # starting_path = 'https://td.byui.edu/TDClient/79/ITHelpCenter/KB/?CategoryID=1875'
     starting_path = 'https://td.byui.edu/SBTDClient/79/ITHelpCenter/KB/?CategoryID=1566'
     find_cat(get_page(starting_path), cat_urls)
