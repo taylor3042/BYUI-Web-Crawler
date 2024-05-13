@@ -20,13 +20,16 @@ def find_cat(html, urls):
     soup = BeautifulSoup(html, 'html.parser')
     div_cats = soup.select_one("#divCats")
     
-    for element in div_cats.descendants:
-        if element.name == 'a':
-            path = element.get_text()
-            if(exceptions(path)):
-                full_url = urljoin(base_url, element.get('href'))
-                urls.append(full_url)
-                #print(full_url, element.get_text())
+    if div_cats is not None:
+        for element in div_cats.descendants:
+            if element.name == 'a':
+                path = element.get_text()
+                if exceptions(path):
+                    full_url = urljoin(base_url, element.get('href'))
+                    urls.append(full_url)
+    else:
+        print("No divCats found in the HTML.")
+
 
 
 def find_art(cat_urls, art_urls):
