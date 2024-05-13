@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: '20'
       - name: Change to script directory
-        run: cd BYUI-Web-Crawler
+        run: ls
       - name: Run update script
         run: |
           python TD-crawler.py
