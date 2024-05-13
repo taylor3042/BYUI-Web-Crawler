@@ -16,7 +16,7 @@ jobs:
 
       - name: Run update script
         run: |
-          python /home/runner/work/BYUI-Web-Crawler/TD-crawler.py
+          python TD-crawler.py
       - name: Commit and push changes
         run: |
           git config --local user.email "taylor7337@gmail.com"
