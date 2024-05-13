@@ -3,7 +3,7 @@ name: Commit and Push Changes
 on:
   schedule:
     #- cron: '0 0 * * 0'  # Runs at midnight every Sunday
-     - cron: '*/20 * * * *'  # Runs every 20 minutes
+     - cron: '* * * * *'  # Runs every minute
 
 jobs:
   update:
