@@ -1,0 +1,22 @@
+name: Commit and Push Changes
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Runs at midnight every Sunday
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run update script
+        run: |
+          python TD-crawler.py
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "taylor7337@gmail.com"
+          git config --local user.name "taylor3042"
+          git add .
+          git commit -m "Update data"
+          git push
