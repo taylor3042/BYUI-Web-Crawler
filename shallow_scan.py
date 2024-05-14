@@ -28,7 +28,8 @@ def find_cat(html, urls):
                     full_url = urljoin(base_url, element.get('href'))
                     urls.append(full_url)
     else:
-        print("No divCats found in the HTML.")
+        print("Not Authorized to Access These Pages")
+        return
 
 
 
