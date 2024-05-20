@@ -57,11 +57,11 @@ def main():
     print("Using shallow scan...")
     cat_urls = [] #catagory pages
     art_urls = [] #article pages
-    # Below  commented out is the starting path for help guides. Change the starting path 
+    # Below  commented out is the starting path for the SandBox Kb's. Change the starting path 
     # below if needed, but make sure to comment out the starting path for the sandbox in case!
 
-    # starting_path = 'https://td.byui.edu/TDClient/79/ITHelpCenter/KB/?CategoryID=1875'
-    starting_path = 'https://td.byui.edu/SBTDClient/79/ITHelpCenter/KB/?CategoryID=1566'
+    starting_path = 'https://td.byui.edu/TDClient/79/ITHelpCenter/KB/?CategoryID=1875'
+    # starting_path = 'https://td.byui.edu/SBTDClient/79/ITHelpCenter/KB/?CategoryID=1566'
     find_cat(get_page(starting_path), cat_urls)
     find_art(cat_urls, art_urls)
     
