@@ -11,7 +11,7 @@ def main():
     words_to_remove = ["Issue", "Environment", "resolution", "Escalation", "Cause", "Resolution", "Tier 1","for", "TIER 1", "the", "a", "and", "an", "The"]
     # Initialize an empty list to store the extracted data
     data = []
-    json_file_path = 'TD.json'
+    json_file_path = 'help_guide.json'
     # Read the CSV file and extract the specified columns
     with open(csv_file, 'r', encoding='utf-8-sig') as csv_file:
         csv_reader = csv.reader(csv_file)
