@@ -2,8 +2,8 @@ name: Commit and Push Changes
 
 on:
   schedule:
-    #- cron: '0 0 * * 0'  # Runs at midnight every Sunday
-    - cron: '*/10 * * * *'  # Runs every 15-ish minutes on github (for testing)
+    - cron: '0 0 * * 0'  # Runs at midnight every Sunday
+    #- cron: '*/10 * * * *'  # Runs every 15-ish minutes on github (for testing)
 
 jobs:
   update:
