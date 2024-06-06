@@ -95,6 +95,8 @@ def extract_info(url):
         tags = extract_tags(html)
         paragraphs = extract_paragraphs(html)
         return header, tags, paragraphs
+    else:
+        return "undetermined", "undetermined", "undetermined"
 
 
 def export_csv(urls, txtFile):
@@ -111,43 +113,44 @@ def export_csv(urls, txtFile):
 def main():
 
     # Check if the user requested help
-    if args.help:
-        print("helpguide_crawler usage:")
-        print("Use --help to bring this guide up again.")
-        print("help arguments: none")
-        print("Use --scan to specify if you would like to use the deep scan or shallow scan.")
-        print("scan arguments: shallow, deep     Shallow is used by defualt")
-        print("Use --rerun to rerun the list of urls (you might want to use this if it updated recently especially)")
-        print("rerun arguments: true, false       False is used by default")
-        print("Use --output to change the output file to something different.")
-        print("output arguments: /path/you/would/like/[name of desired file].csv     help_guide.csv is used by default")
-        return
+    #if args.help:
+    #    print("helpguide_crawler usage:")
+    #    print("Use --help to bring this guide up again.")
+    #    print("help arguments: none")
+    #    print("Use --scan to specify if you would like to use the deep scan or shallow scan.")
+    #    print("scan arguments: shallow, deep     Shallow is used by defualt")
+    #    print("Use --rerun to rerun the list of urls (you might want to use this if it updated recently especially)")
+    #    print("rerun arguments: true, false       False is used by default")
+    #    print("Use --output to change the output file to something different.")
+    #    print("output arguments: /path/you/would/like/[name of desired file].csv     help_guide.csv is used by default")
+    #    return
+    #
+    #text_file = args.output
+    #input_file = "article_urls.txt"
+    #if(args.rerun == "no"):
+    #    rerun = False
+    #else:
+    #    rerun = True
+#
+    #if(rerun):
+    #    if(args.scan == "deep"):
+    #        deep_main()
+    #    elif (args.scan == "shallow"):
+    #        shallow_main()
+    #    else:
+    #        print("Sorry, I didn't understand your scanning preference")
+    #        print("Using default")
+    #        shallow_main()
+    #else: 
+    #    print("Skipping scan, exporting information to csv...")
     
-    text_file = args.output
-    input_file = "article_urls.txt"
-    if(args.rerun == "no"):
-        rerun = False
-    else:
-        rerun = True
-
-    if(rerun):
-        if(args.scan == "deep"):
-            deep_main()
-        elif (args.scan == "shallow"):
-            shallow_main()
-        else:
-            print("Sorry, I didn't understand your scanning preference")
-            print("Using default")
-            shallow_main()
-    else: 
-        print("Skipping scan, exporting information to csv...")
-    
-    urls = []
-    get_urls(input_file, urls)
-    url_clean()
-    export_csv(urls, text_file)
-    data_clean()
-    print("Finished!")
+    #urls = []
+    #get_urls(input_file, urls)
+    #url_clean()
+    #export_csv(urls, text_file)
+    #data_clean()
+    #print("Finished!")
+    print(extract_info("https://td.byui.edu/TDClient/79/ITHelpCenter/KB/ArticleDet?ID=11679"))
 if __name__ == '__main__':
     main()
     

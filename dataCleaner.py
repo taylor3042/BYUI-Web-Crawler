@@ -45,15 +45,20 @@ def main():
         item['topic'] = item['topic'].replace('\u00a0', '')
         item['topic'] = item['topic'].replace(' ', '')
         item['topic'] = item['topic'].replace('\"', '')
+        item['topic'] = item['topic'].replace('\u2019', '')
         item['content'] = item['content'].replace('\n', '')
         item['content'] = item['content'].replace('\"', '')
         item['content'] = item['content'].replace('\t', '')
+        item['content'] = item['content'].replace('\udc17', '')
+        item['content'] = item['content'].replace('\ud83e', '')
+        item['content'] = item['content'].replace('\u2019', '')
+        item['content'] = item['content'].replace('\u2b07', '')
+        item['content'] = item['content'].replace('\ufe0f', '')
         item['content'] = item['content'].replace('\u200b', '')
         item['content'] = item['content'].replace('\u201c', '')
         item['content'] = item['content'].replace('\u201d', '')
         item['content'] = item['content'].replace('\u2013', '')
         item['content'] = item['content'].replace('\u2003', '')
-        item['content'] = item['content'].replace('\u2019', '')
         item['content'] = item['content'].replace('\u2026', '')
         item['content'] = item['content'].replace('\u202f', '')
         item['content'] = item['content'].replace('\u2014', '')
@@ -61,8 +66,9 @@ def main():
     # Removes any more spaces (there should only be a few more)
     for item in data:
         item['content'] = item['content'].replace(' ', '')
-    data = data[1:]
-
+        item['content'] = item['content'].replace('\udc17', '')
+        item['content'] = item['content'].replace('\ud83e', '')
+    data = data[2:]
     # Writes the modified data back to the same JSON file
     with open(json_file_path, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, indent=4)
